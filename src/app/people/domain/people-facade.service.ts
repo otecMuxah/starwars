@@ -1,20 +1,32 @@
 import { Injectable } from '@angular/core';
-import { PeopleService } from './api/people.service';
-import { LocalStorageService } from './storage/local-storage.service';
 import { Observable } from 'rxjs';
 import { Person } from './models/person';
-
-const PEOPLE_STORE_KEY = 'people';
+import { PeopleStorageService } from './storage/people-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PeopleFacadeService {
-  people$!: Observable<Person[]>;
+  people$: Observable<Person[]> = this.peopleStorageService.people$;
+  // peopleFavorites$: Observable<Person[]> = this.peopleStorageService.peopleFavorites$;
+  peopleCount$ = this.peopleStorageService.peopleCount$;
+  peopleNextPage$ = this.peopleStorageService.peopleNextPage$;
+  peoplePreviousPage$ = this.peopleStorageService.peoplePreviousPage$;
 
-  constructor(private peopleApi: PeopleService, private storage: LocalStorageService) {}
+  constructor(private peopleStorageService: PeopleStorageService) {}
 
-  getPeople(): void {
-    this.people$ = this.peopleApi.getPeople();
+  initFacade(): void {
+    this.peopleStorageService.initStorage();
+
+    this.people$ = this.peopleStorageService.people$;
+    // this.peopleFavorites$ = this.peopleStorageService.peopleFavorites$;
+
+    this.people$.subscribe(data => {
+      console.log(data);
+    });
+  }
+
+  loadPage(num: number): void {
+    this.peopleStorageService.resolveCachedData(num);
   }
 }

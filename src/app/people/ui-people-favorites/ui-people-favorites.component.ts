@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Person } from '../domain/models/person';
 
 @Component({
   selector: 'app-ui-people-favorites',
@@ -6,8 +7,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: ['./ui-people-favorites.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UiPeopleFavoritesComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class UiPeopleFavoritesComponent {
+  @Input() favoritePeople: Person[] = [];
+  displayedColumns: string[] = ['name'];
 }

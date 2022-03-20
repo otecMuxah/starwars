@@ -14,6 +14,10 @@ const routes: Routes = [
         path: 'people',
         loadChildren: async () => (await import('./people/feature-people-page/feature-people-page.module')).FeaturePeoplePageModule,
       },
+      {
+        path: 'people/:id',
+        loadChildren: async () => (await import('./person-details/feature-person-page/feature-person-page.module')).FeaturePersonPageModule,
+      },
     ],
   },
 ];

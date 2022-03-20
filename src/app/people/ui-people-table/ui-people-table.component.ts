@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { Person } from '../domain/models/person';
 
 @Component({
   selector: 'app-ui-people-table',
@@ -6,8 +7,9 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: ['./ui-people-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UiPeopleTableComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
+export class UiPeopleTableComponent {
+  @Input() people: Person[] = [];
+  @Input() totalPeople: number = 0;
+  @Output() pageChanges = new EventEmitter<number | undefined>();
+  displayedColumns: string[] = ['id', 'name', 'birth_year', 'height', 'films', 'favorite'];
 }

@@ -9,8 +9,18 @@ export class LocalStorageService {
     localStorage.setItem(path, jsonData);
   }
 
-  getData(path: string): string | null {
-    return localStorage.getItem(path);
+  getData<T>(path: string): T | null {
+    let data;
+    let rawdata = localStorage.getItem(path);
+    if (rawdata) {
+      try {
+        data = JSON.parse(rawdata || '');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    return data;
   }
 
   removeData(path: string): void {

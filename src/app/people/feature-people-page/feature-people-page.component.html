@@ -1,1 +1,6 @@
-{{peopleFacade.people$ | async | json}}
+<app-ui-people-table
+  [people]="(peopleFacade.people$ | async) || []"
+  [totalPeople]="(peopleFacade.peopleCount$ | async) || 0"
+  (pageChanges)="peopleFacade.loadPage($event || 1)"
+></app-ui-people-table>
+<!--<app-ui-people-favorites [favoritePeople]="(peopleFacade.peopleFavorites$ | async) || []"></app-ui-people-favorites>-->

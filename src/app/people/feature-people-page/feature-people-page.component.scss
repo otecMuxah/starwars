@@ -1,0 +1,9 @@
+:host {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 32px;
+}
+app-ui-people-table {
+  flex: 0 1 90%
+}

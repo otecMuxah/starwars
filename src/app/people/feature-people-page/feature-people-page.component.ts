@@ -13,6 +13,6 @@ export class FeaturePeoplePageComponent implements OnInit {
   constructor(public peopleFacade: PeopleFacadeService) {}
 
   ngOnInit(): void {
-    this.peopleFacade.getPeople();
+    this.peopleFacade.initFacade();
   }
 }

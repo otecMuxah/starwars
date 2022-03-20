@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Person } from '../../../people/domain/models/person';
 import { environment } from '../../../../environments/environment';
-import { ApiResponse } from '../models/api-response';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PeopleService {
+export class PersonService {
   constructor(private http: HttpClient) {}
 
-  getPeople(pageNumber = 1): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${environment.base_url}${pageNumber ? 'people/?page=' + pageNumber : 'people'}`);
+  getPerson(id: string): Observable<Person> {
+    return this.http.get<Person>(`${environment.base_url}people/${id}`);
   }
 }
