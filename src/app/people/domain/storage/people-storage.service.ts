@@ -54,11 +54,9 @@ export class PeopleStorageService {
           tap(data => {
             this.localStorage.setData(PEOPLE_STORE_KEY + this.currentPage, data.results);
             this.localStorage.setData(PEOPLE_COUNT_STORE_KEY, data.count);
-          }),
-          tap(res => {
-            this.setPeopleCount(+res.count);
-            this.setPeopleNextPage(+res.next);
-            this.setPeoplePreviousPage(+res.previous);
+            this.setPeopleCount(+data.count);
+            this.setPeopleNextPage(+data.next);
+            this.setPeoplePreviousPage(+data.previous);
           }),
           map(res => res.results),
         )

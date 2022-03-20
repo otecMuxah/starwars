@@ -1,0 +1,11 @@
+.star {
+  color: gray;
+}
+mat-card-content {
+  display: flex;
+  width: 100%;
+  gap: 32px;
+}
+.details {
+  flex: 0 1 50%;
+}
