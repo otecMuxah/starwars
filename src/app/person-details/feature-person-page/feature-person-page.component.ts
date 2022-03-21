@@ -9,12 +9,13 @@ import { PersonFacadeService } from '../domain/person-facade.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FeaturePersonPageComponent implements OnInit {
+  personId = '';
   constructor(private route: ActivatedRoute, public personFacade: PersonFacadeService) {}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    if (id) {
-      this.personFacade.getPerson(id);
+    this.personId = this.route.snapshot.paramMap.get('id') || '';
+    if (this.personId) {
+      this.personFacade.getPerson(this.personId);
     }
   }
 }

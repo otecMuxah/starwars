@@ -1,37 +1,43 @@
 <ng-container *ngIf="personFacade.person$ | async as person">
   <mat-card>
     <mat-card-title>
-      <mat-icon aria-hidden="false" aria-label="star icon" class="star">star</mat-icon>
-      {{person.name}}
+      <mat-icon
+        aria-hidden="false"
+        aria-label="star icon"
+        class="star"
+        [class.gold]="personFacade.isFavorite"
+        (click)="personFacade.toggleFavorite(person)"
+      >
+        star
+      </mat-icon>
+      {{ person.name }}
     </mat-card-title>
 
     <mat-card-content>
       <mat-card class="details">
         <mat-list>
-          <mat-list-item>Height - {{person.height}}</mat-list-item>
+          <mat-list-item>Height - {{ person.height }}</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>Birth year - {{person.birth_year}}</mat-list-item>
+          <mat-list-item>Birth year - {{ person.birth_year }}</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>Gender - {{person.gender}}</mat-list-item>
+          <mat-list-item>Gender - {{ person.gender }}</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item>Hair color - {{person.hair_color}}</mat-list-item>
+          <mat-list-item>Hair color - {{ person.hair_color }}</mat-list-item>
         </mat-list>
       </mat-card>
       <mat-card class="details">
         <mat-card-title>Films</mat-card-title>
         <mat-list>
           <ng-container *ngFor="let film of personFacade.filmList$ | async">
-            <mat-list-item>{{film.title}}</mat-list-item>
+            <mat-list-item>{{ film.title }}</mat-list-item>
             <mat-divider></mat-divider>
           </ng-container>
         </mat-list>
       </mat-card>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button [routerLink]="'../'" >BACK</button>
+      <button mat-button [routerLink]="'../'">BACK</button>
       <button mat-button>EDIT</button>
     </mat-card-actions>
   </mat-card>
 </ng-container>
-
-

@@ -1,5 +1,8 @@
 .star {
   color: gray;
+  &.gold {
+    color: gold;
+  }
 }
 mat-card-content {
   display: flex;

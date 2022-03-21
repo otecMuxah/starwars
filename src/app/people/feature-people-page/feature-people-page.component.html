@@ -4,4 +4,4 @@
   [currentPage]="(peopleFacade.currentPage$ | async) || 0"
   (pageChanges)="peopleFacade.loadPage($event || 1)"
 ></app-ui-people-table>
-<!--<app-ui-people-favorites [favoritePeople]="(peopleFacade.peopleFavorites$ | async) || []"></app-ui-people-favorites>-->
+<app-ui-people-favorites [favoritePeople]="(peopleFacade.peopleFavorites$ | async) || []"></app-ui-people-favorites>

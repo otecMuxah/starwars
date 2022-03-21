@@ -5,10 +5,11 @@ import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { UrlToIdModule } from '../domain/pipes/url-to-id/url-to-id.module';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [UiPeopleTableComponent],
   exports: [UiPeopleTableComponent],
-  imports: [CommonModule, RouterModule, MatTableModule, UrlToIdModule, MatPaginatorModule],
+  imports: [CommonModule, RouterModule, MatTableModule, UrlToIdModule, MatPaginatorModule, MatCheckboxModule],
 })
 export class UiPeopleTableModule {}

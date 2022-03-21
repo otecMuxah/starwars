@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Person } from '../domain/models/person';
+import { Person } from '../../shared/models/person';
 
 @Component({
   selector: 'app-ui-people-table',

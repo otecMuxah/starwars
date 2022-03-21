@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { PeopleFacadeService } from '../domain/people-facade.service';
 import { Observable } from 'rxjs';
-import { Person } from '../domain/models/person';
+import { Person } from '../../shared/models/person';
 
 @Component({
   selector: 'app-feature-people-page',
