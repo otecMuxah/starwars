@@ -11,10 +11,7 @@ import { Film } from '../models/film';
 export class PersonService {
   constructor(private http: HttpClient) {}
 
-  getPerson(id: string): Observable<Person> {
+  getData(id: number): Observable<Person> {
     return this.http.get<Person>(`${environment.base_url}people/${id}`);
-  }
-  getFilm(id: number): Observable<Film> {
-    return this.http.get<Film>(`${environment.base_url}films/${id}`);
   }
 }

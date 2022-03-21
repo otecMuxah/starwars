@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, take, tap } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { Person } from '../models/person';
 import { PeopleService } from '../api/people.service';
 import { LocalStorageService } from './local-storage.service';
+import { PeopleCachedService } from '../cache/people-cached.service';
 
 const PEOPLE_STORE_KEY = 'people';
 const PEOPLE_COUNT_STORE_KEY = 'peopleCount';
@@ -22,7 +23,7 @@ export class PeopleStorageService {
   peopleNextPage$ = this.peopleNextPage$$.asObservable();
   peoplePreviousPage$ = this.peoplePreviousPage$$.asObservable();
 
-  constructor(private peopleApi: PeopleService, private localStorage: LocalStorageService) {}
+  constructor(private peopleApi: PeopleService, private localStorage: LocalStorageService, private people: PeopleCachedService) {}
 
   setPeopleCount(num: number): void {
     this.peopleCount$$.next(num);
@@ -42,33 +43,18 @@ export class PeopleStorageService {
 
   resolveCachedData(pageNumber: number): void {
     this.currentPage = pageNumber;
-
-    const storedPeople: Person[] = this.localStorage.getData(PEOPLE_STORE_KEY + this.currentPage) || [];
-    const storedPeopleCount: number = this.localStorage.getData(PEOPLE_COUNT_STORE_KEY) || 0;
-
-    if (!storedPeople.length) {
-      this.peopleApi
-        .getPeople(pageNumber)
-        .pipe(
-          take(1),
-          tap(data => {
-            this.localStorage.setData(PEOPLE_STORE_KEY + this.currentPage, data.results);
-            this.localStorage.setData(PEOPLE_COUNT_STORE_KEY, data.count);
-            this.setPeopleCount(+data.count);
-            this.setPeopleNextPage(+data.next);
-            this.setPeoplePreviousPage(+data.previous);
-          }),
-          map(res => res.results),
-        )
-        .subscribe(data => {
-          this.people$.next(data);
-        });
-    } else {
-      this.people$.next(storedPeople);
-    }
-
-    if (storedPeopleCount) {
-      this.setPeopleCount(storedPeopleCount);
-    }
+    this.people
+      .resolveCachedData(pageNumber, PEOPLE_STORE_KEY)
+      .pipe(
+        tap(data => {
+          debugger;
+          this.localStorage.setData(PEOPLE_COUNT_STORE_KEY, data.count);
+          this.setPeopleCount(+data.count);
+          this.setPeopleNextPage(+data.next);
+          this.setPeoplePreviousPage(+data.previous);
+        }),
+        map(res => res.results),
+      )
+      .subscribe(people => this.people$.next(people));
   }
 }

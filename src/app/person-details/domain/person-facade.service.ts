@@ -1,51 +1,45 @@
 import { Injectable } from '@angular/core';
-import { PersonService } from './api/person.service';
 import { Person } from '../../people/domain/models/person';
-import { BehaviorSubject, map, Observable, take, tap } from 'rxjs';
-import { LocalStorageService } from '../../people/domain/storage/local-storage.service';
+import { BehaviorSubject, take, tap } from 'rxjs';
 import { Film } from './models/film';
+import { PersonCacheableService } from './cache/person-cacheable.service';
+import { FilmCacheableService } from './cache/film-cacheable.service';
 
 const FILM_STORE_KEY = 'film';
+const PERSON_STORE_KEY = 'person';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PersonFacadeService {
-  person$!: Observable<Person>;
+  person$ = new BehaviorSubject<Person>({} as Person);
   filmList$ = new BehaviorSubject<Film[]>([]);
 
-  constructor(private personService: PersonService, private localStorage: LocalStorageService) {}
+  constructor(private personService: PersonCacheableService, private filmService: FilmCacheableService) {}
 
-  getPerson(id: string) {
-    this.person$ = this.personService.getPerson(id).pipe(
-      tap(data => {
-        const idList = data.films.map(el => el.split('/').slice(-2, -1));
-        this.filmList$.next(this.resolveCachedFilms(idList.flat(2)));
-      }),
-    );
+  getPerson(id: string): void {
+    this.personService
+      .resolveCachedData(+id, PERSON_STORE_KEY)
+      .pipe(
+        take(1),
+        tap(data => {
+          const idList = data.films.map(el => el.split('/').slice(-2, -1));
+          this.getFilms(idList.flat(2));
+        }),
+      )
+      .subscribe(data => this.person$.next(data as Person));
   }
 
-  resolveCachedFilms(filmNumberList: string[]): Film[] {
+  getFilms(filmNumberList: string[]): void {
     const result: Film[] = [];
     for (let filmNumber of filmNumberList) {
-      const storedData: Film = this.localStorage.getData(FILM_STORE_KEY + filmNumber) || ({} as Film);
-
-      if (!storedData.title) {
-        this.personService
-          .getFilm(+filmNumber)
-          .pipe(
-            take(1),
-            tap(data => {
-              this.localStorage.setData(FILM_STORE_KEY + filmNumber, data);
-            }),
-          )
-          .subscribe(data => {
-            result.push(data);
-          });
-      } else {
-        result.push(storedData);
-      }
+      this.filmService
+        .resolveCachedData(+filmNumber, FILM_STORE_KEY)
+        .pipe(take(1))
+        .subscribe(data => {
+          result.push(data);
+          this.filmList$.next(result);
+        });
     }
-    return result;
   }
 }

@@ -1,16 +1,15 @@
 import { LocalStorageService } from '../people/domain/storage/local-storage.service';
 import { Observable, of, take, tap } from 'rxjs';
 
-export interface CacheableService {
-  getData: (id: number) => Observable<any>;
+export interface CacheableService<T> {
+  getData: (id: number) => Observable<T>;
 }
 
-export abstract class CachedRequest {
-  constructor(private localStorage: LocalStorageService, protected service: CacheableService) {}
+export class CachedRequest<T> {
+  constructor(private localStorage: LocalStorageService, protected service: CacheableService<T>) {}
 
-  resolveCachedData<T>(dataId: number, storeKey: string): Observable<T> {
+  resolveCachedData(dataId: number, storeKey: string): Observable<T> {
     const storedData: T | null = this.localStorage.getData(storeKey + dataId) || null;
-    let result: T;
 
     if (!storedData) {
       return this.service.getData(+dataId).pipe(

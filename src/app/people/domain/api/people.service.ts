@@ -10,7 +10,7 @@ import { ApiResponse } from '../models/api-response';
 export class PeopleService {
   constructor(private http: HttpClient) {}
 
-  getPeople(pageNumber = 1): Observable<ApiResponse> {
+  getData(pageNumber = 1): Observable<ApiResponse> {
     return this.http.get<ApiResponse>(`${environment.base_url}${pageNumber ? 'people/?page=' + pageNumber : 'people'}`);
   }
 }
