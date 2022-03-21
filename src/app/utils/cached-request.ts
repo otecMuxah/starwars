@@ -1,4 +1,4 @@
-import { LocalStorageService } from '../people/domain/storage/local-storage.service';
+import { LocalStorageService } from './local-storage.service';
 import { Observable, of, take, tap } from 'rxjs';
 
 export interface CacheableService<T> {

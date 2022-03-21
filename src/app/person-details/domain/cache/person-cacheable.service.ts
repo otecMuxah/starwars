@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CachedRequest } from '../../../utils/cached-request';
-import { LocalStorageService } from '../../../people/domain/storage/local-storage.service';
+import { LocalStorageService } from '../../../utils/local-storage.service';
 import { PersonService } from '../api/person.service';
 import { Person } from '../../../people/domain/models/person';
 

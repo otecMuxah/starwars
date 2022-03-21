@@ -1,42 +1,44 @@
 <table mat-table [dataSource]="people" class="mat-elevation-z8">
-
   <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef> No.</th>
-    <td mat-cell *matCellDef="let element"> {{element.url | urlToId}} </td>
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let element">{{ element.url | urlToId }}</td>
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name</th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
   </ng-container>
 
   <ng-container matColumnDef="birth_year">
-    <th mat-header-cell *matHeaderCellDef> Birth year</th>
-    <td mat-cell *matCellDef="let element"> {{element.birth_year}} </td>
+    <th mat-header-cell *matHeaderCellDef>Birth year</th>
+    <td mat-cell *matCellDef="let element">{{ element.birth_year }}</td>
   </ng-container>
 
   <ng-container matColumnDef="height">
-    <th mat-header-cell *matHeaderCellDef> Height</th>
-    <td mat-cell *matCellDef="let element"> {{element.height}} </td>
+    <th mat-header-cell *matHeaderCellDef>Height</th>
+    <td mat-cell *matCellDef="let element">{{ element.height }}</td>
   </ng-container>
 
   <ng-container matColumnDef="films">
-    <th mat-header-cell *matHeaderCellDef> Films</th>
-    <td mat-cell *matCellDef="let element"> {{element.films.length}} </td>
+    <th mat-header-cell *matHeaderCellDef>Films</th>
+    <td mat-cell *matCellDef="let element">{{ element.films.length }}</td>
   </ng-container>
 
   <ng-container matColumnDef="favorite">
-    <th mat-header-cell *matHeaderCellDef> Favorite</th>
-    <td mat-cell *matCellDef="let element"> {{element.favorite}} </td>
+    <th mat-header-cell *matHeaderCellDef>Favorite</th>
+    <td mat-cell *matCellDef="let element">{{ element.favorite }}</td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" [routerLink]="['.', row.url | urlToId]"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns" [routerLink]="['.', row.url | urlToId]"></tr>
 </table>
 
-<mat-paginator [pageSizeOptions]="[10]"
-               [length]="totalPeople"
-               (page)="pageChanges.emit($event.pageIndex + 1)"
-               showFirstLastButtons
-               aria-label="Select page of periodic elements">
+<mat-paginator
+  [pageSizeOptions]="[10]"
+  [length]="totalPeople"
+  [pageIndex]="currentPage - 1"
+  (page)="pageChanges.emit($event.pageIndex + 1)"
+  showFirstLastButtons
+  aria-label="Select page of periodic elements"
+>
 </mat-paginator>

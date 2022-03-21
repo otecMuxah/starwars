@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LocalStorageService } from '../../../people/domain/storage/local-storage.service';
+import { LocalStorageService } from '../../../utils/local-storage.service';
 import { PersonService } from '../api/person.service';
 import { CachedRequest } from '../../../utils/cached-request';
 import { Film } from '../models/film';

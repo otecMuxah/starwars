@@ -10,6 +10,7 @@ import { Person } from '../domain/models/person';
 export class UiPeopleTableComponent {
   @Input() people: Person[] = [];
   @Input() totalPeople: number = 0;
+  @Input() currentPage: number = 0;
   @Output() pageChanges = new EventEmitter<number | undefined>();
   displayedColumns: string[] = ['id', 'name', 'birth_year', 'height', 'films', 'favorite'];
 }

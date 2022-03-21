@@ -1,6 +1,6 @@
 import { Person } from './person';
 
-export interface ApiResponse {
+export interface PeopleApiResponse {
   count: number;
   next: string;
   previous: string;
