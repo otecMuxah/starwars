@@ -16,12 +16,12 @@ export class FavoritePeopleService {
   constructor(private localStorage: LocalStorageService) {}
 
   loadFavorites(): void {
-    const favorites: Person[] | null = this.localStorage.getData(FAVORITES_STORE_KEY);
-    if (favorites) {
-      if (!this.currentFavorites.size) {
+    if (!this.currentFavorites.size) {
+      const favorites: Person[] | null = this.localStorage.getData(FAVORITES_STORE_KEY);
+      if (favorites) {
         favorites.forEach(person => this.currentFavorites.add(person));
+        this.favoritePersonList$$.next(favorites);
       }
-      this.favoritePersonList$$.next(favorites);
     }
   }
 
